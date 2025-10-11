@@ -9,7 +9,7 @@ set "IMAGE=whoicd/icd-api"
 set "HOST_PORT=8090"
 set "CONTAINER_PORT=80"
 set "PORT_MAPPING=%HOST_PORT%:%CONTAINER_PORT%"
-set "ENV_VARS=-e include=2025-01_fr-en -e enableDoris=true -e acceptLicense=true -e saveAnalytics=true"
+set "ENV_VARS=-e include=2024-01_fr-en -e enableDoris=true -e acceptLicense=true -e saveAnalytics=true"
 set "TASK_NAME=Start ICD API Container"
 set "INSTALL_DIR=%ProgramFiles%\RedHat\Podman"
 set "PODMAN_EXE=%INSTALL_DIR%\podman.exe"
@@ -108,4 +108,5 @@ echo Access it via: http://localhost:%HOST_PORT%
 echo.
 pause
 endlocal
+
 
