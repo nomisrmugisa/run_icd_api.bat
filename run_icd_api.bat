@@ -27,10 +27,17 @@ if not exist "%PODMAN_EXE%" (
         echo Installing via Winget...
         winget install -e --id RedHat.Podman -h
     ) else (
-        echo Winget not found, downloading MSI installer...
+        echo Winget not found, downloading installer...
         powershell -Command ^
-        "Invoke-WebRequest -Uri 'https://github.com/containers/podman/releases/latest/download/podman-installer.exe' -OutFile 'podman-installer.exe'" ^
+        "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Invoke-WebRequest -UseBasicParsing -Uri 'https://github.com/containers/podman/releases/latest/download/podman-installer.exe' -OutFile 'podman-installer.exe'" ^
         >> "%LOGFILE%" 2>&1
+
+        if not exist podman-installer.exe (
+            echo ERROR: Failed to download Podman installer. Check your internet connection or the log file: %LOGFILE%
+            pause
+            exit /b 1
+        )
+
         echo Running Podman installer...
         start /wait podman-installer.exe /SILENT
         del podman-installer.exe
@@ -108,5 +115,3 @@ echo Access it via: http://localhost:%HOST_PORT%
 echo.
 pause
 endlocal
-
-
